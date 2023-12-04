@@ -20,7 +20,6 @@ pub fn day_four() -> Result<(), Error> {
   };
 
   let mut cards: HashMap<isize, isize> = HashMap::new();
-  let mut sum: isize = 0;
   for (_, line) in contents.lines().enumerate() {
     let captured_line = line_re.captures(line).unwrap();
     let game_id = captured_line
