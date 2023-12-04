@@ -16,18 +16,30 @@ pub fn day_one() -> Result<(), Error> {
   };
 
   let lines = contents.split("\n");
-  let mut numbers: Vec<i64> = Vec::new();
+  let mut sum: i64 = 0;
 
   for line in lines {
-    let captures = digits_re.find_iter(line);
-    let digits: Vec<&str> = captures.map(|capture| capture.as_str()).collect();
-    let first = digits[0];
-    let last = digits[digits.len() - 1];
+    let transformed_line = line
+    .replace("one", "o1e")
+    .replace("two", "t2o")
+    .replace("three", "thr3e")
+    .replace("four", "f4ur")
+    .replace("five", "f5ve")
+    .replace("six", "s6x")
+    .replace("seven", "s7ven")
+    .replace("eight", "e8ght")
+    .replace("nine", "n9ne");
+
+    let captures = digits_re.find_iter(transformed_line.as_str());
+    let numbers: Vec<&str> = captures.map(|capture| capture.as_str()).collect();
+    println!("{:?}", numbers);
+    let first =  numbers[0];
+    let last = numbers[numbers.len() - 1];
+    println!("{:?} -> {:?} ir {:?} yra {:?}", line, first, last,format!("{}{}", first, last));
     let number = format!("{}{}", first, last).parse::<i64>().unwrap();
-    numbers.push(number);
+    sum += number;
   }
 
-  let sum: i64 = numbers.iter().sum();
 
   print!("Sum is: {}", sum);
   Ok(())
