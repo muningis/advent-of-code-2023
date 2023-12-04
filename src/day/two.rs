@@ -1,5 +1,5 @@
 use regex::{Regex, Captures};
-use std::{env, fs};
+use std::{env, fs, io::Error};
 
 const MAX_RED: i64 = 12;
 const MAX_GREEN: i64 = 13;
@@ -45,7 +45,7 @@ fn iterate_game(game: &str) -> (bool, i64) {
     (check, min_blue * min_green * min_red)
 }
 
-fn main() {
+pub fn day_two() -> Result<(), Error> {
     let data_re =
         Regex::new(r"Game (?<game_id>\d{1,}): ((\d{1,} (red(, )?|blue(, )?|green(, )?)(; )?){1,})")
             .unwrap();
@@ -53,7 +53,7 @@ fn main() {
     let mut powers: Vec<i64> = Vec::new();
 
     let args: Vec<String> = env::args().collect();
-    let file_path = &args[1];
+    let file_path = &args[2];
 
     let contents = match fs::read_to_string(file_path) {
         Ok(contents) => contents,
@@ -75,4 +75,6 @@ fn main() {
     let powers_sum: i64 = powers.iter().sum();
     println!("Sum of games IDs with possible cubes combinations: {}", ids_sum);
     println!("Sum of games powers: {}", powers_sum);
+
+    Ok(())
 }

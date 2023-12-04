@@ -56,13 +56,13 @@ fn handle_line(
   (should_insert, number)
 }
 
-fn main() -> Result<(), Error> {
+pub fn day_three() -> Result<(), Error> {
   let digit_re = Regex::new(r"\d").unwrap();
   let special_symbol_re = Regex::new(r"[^a-zA-Z0-9\.]").unwrap();
   let gear_re = Regex::new(r"\*").unwrap();
 
   let args: Vec<String> = env::args().collect();
-  let file_path = &args[1];
+  let file_path = &args[2];
 
   let contents = match fs::read_to_string(file_path) {
     Ok(contents) => contents,
@@ -103,7 +103,7 @@ fn main() -> Result<(), Error> {
         let west = schematic[y][x - 1];
         if digit_re.is_match(west) {
           let (inserted, value) = handle_line(&mut found_numbers, &schematic[y].join(""), x - 1, y);
-          if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+          if is_gear && inserted { 
             adjacent_numbers_count += 1;
             adjacent_numbers_ratio *= value;
           }
@@ -113,7 +113,7 @@ fn main() -> Result<(), Error> {
         let east = schematic[y][x + 1];
         if digit_re.is_match(east) {
           let (inserted, value) = handle_line(&mut found_numbers, &schematic[y].join(""), x + 1, y);
-          if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+          if is_gear && inserted { 
             adjacent_numbers_count += 1;
             adjacent_numbers_ratio *= value;
           }
@@ -123,7 +123,7 @@ fn main() -> Result<(), Error> {
         let north = schematic[y - 1][x];
         if digit_re.is_match(north) {
           let (inserted, value) = handle_line(&mut found_numbers, &schematic[y - 1].join(""), x, y - 1);
-          if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+          if is_gear && inserted { 
             adjacent_numbers_count += 1;
             adjacent_numbers_ratio *= value;
           }
@@ -132,7 +132,7 @@ fn main() -> Result<(), Error> {
           let northwest = schematic[y - 1][x - 1];
           if digit_re.is_match(northwest) {
             let (inserted, value) = handle_line(&mut found_numbers, &schematic[y - 1].join(""), x - 1, y - 1);
-            if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+            if is_gear && inserted { 
               adjacent_numbers_count += 1;
               adjacent_numbers_ratio *= value;
             }
@@ -142,7 +142,7 @@ fn main() -> Result<(), Error> {
           let northeast = schematic[y - 1][x + 1];
           if digit_re.is_match(northeast) {
             let (inserted, value) = handle_line(&mut found_numbers, &schematic[y - 1].join(""), x + 1, y - 1);
-            if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+            if is_gear && inserted { 
               adjacent_numbers_count += 1;
               adjacent_numbers_ratio *= value;
             }
@@ -153,7 +153,7 @@ fn main() -> Result<(), Error> {
         let south = schematic[y + 1][x];
         if digit_re.is_match(south) {
           let (inserted, value) = handle_line(&mut found_numbers, &schematic[y + 1].join(""), x, y + 1);
-          if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+          if is_gear && inserted { 
             adjacent_numbers_count += 1;
             adjacent_numbers_ratio *= value;
           }
@@ -162,7 +162,7 @@ fn main() -> Result<(), Error> {
           let southhwest = schematic[y + 1][x - 1];
           if digit_re.is_match(southhwest) {
             let (inserted, value) = handle_line(&mut found_numbers, &schematic[y + 1].join(""), x - 1, y + 1);
-            if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+            if is_gear && inserted { 
               adjacent_numbers_count += 1;
               adjacent_numbers_ratio *= value;
             }
@@ -172,7 +172,7 @@ fn main() -> Result<(), Error> {
           let southheast = schematic[y + 1][x + 1];
           if digit_re.is_match(southheast) {
             let (inserted, value) = handle_line(&mut found_numbers, &schematic[y + 1].join(""), x + 1, y + 1);
-            if is_gear && inserted { println!("found gear for x {} y {} value {}", x, y, value);
+            if is_gear && inserted { 
               adjacent_numbers_count += 1;
               adjacent_numbers_ratio *= value;
             }
