@@ -12,6 +12,7 @@ fn main() -> Result<(), Error> {
     "2" => day::two::day_two(),
     "3" => day::three::day_three(),
     "4" => day::four::day_four(),
+    "5" => day::five::day_five(),
     _ => panic!("Day is not implemented"),
   };
 
