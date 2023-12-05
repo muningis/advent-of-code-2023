@@ -77,14 +77,17 @@ fn parse_digits_in_line(line: &str) -> (usize, usize, usize) {
 }
 
 fn parse_seeds_numbers(line: &str) -> HashMap<usize, usize> {
-  let re = Regex::new(r"\d+").unwrap();
-
-  re.find_iter(line)
-    .map(|f| {
-      let value = f.as_str().parse::<usize>().unwrap();
-      (value, value)
-    })
-    .collect()
+  let re = Regex::new(r"(\d+ \d+)").unwrap();
+  let mut seeds: HashMap<usize, usize> = HashMap::new();
+  re.find_iter(line).for_each(|m| {
+    let mut start_and_length = m.as_str().split(" ").into_iter();
+    let start: usize = start_and_length.next().unwrap().parse::<usize>().unwrap().to_owned();
+    let length: usize = start_and_length.next().unwrap().parse::<usize>().unwrap().to_owned();
+    for i in start..start+length {
+      seeds.insert(i, i);
+    }
+  });
+  seeds
 }
 
 #[cfg(test)]
@@ -99,8 +102,8 @@ mod tests {
 
   #[test]
   fn get_seeds() {
-    let result = parse_seeds_numbers("seeds: 12 23 34 45");
-    let expected: HashMap<usize, usize> = [(12, 12), (23, 23), (34, 34), (45, 45)]
+    let result = parse_seeds_numbers("seeds: 12 3 23 4");
+    let expected: HashMap<usize, usize> = [(12, 12), (13, 13), (14,14), (23, 23), (24, 24), (25, 25), (26, 26)]
       .iter()
       .cloned()
       .collect();
